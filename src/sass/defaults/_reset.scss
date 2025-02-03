@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {scroll-behavior: smooth;}
+body {
+  font-family: sans-serif;
+  line-height: 1.5;
+  color: #333;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+ul, ol {list-style: none;}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+button, input, textarea, select {
+  font: inherit;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+button {cursor: pointer;}
+
+/* Define imagens responsivas */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+input, textarea {
+  width: 100%;
+}
+audio, video {
+  display: block;
+  max-width: 100%;
+}
