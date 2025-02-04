@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react'
+import { useRef, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
 import styles from './css/app.module.css';
@@ -14,11 +15,11 @@ export interface TaskType {
 
 export default function App () {
 
-  const [tasks, setNewTask] = useState<TaskType[]>([])
+  const [tasks, setTasks] = useState<TaskType[]>([])
 
   const [newTaskContent, setNewTaskContent] = useState('');
 
-  const [isTheTaskCompleted, setIsTheTaskCompleted] = useState(false)
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   function handleNewTaskChange(event: ChangeEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity('')
@@ -28,26 +29,69 @@ export default function App () {
   function handleCreateNewTask(event: FormEvent) {
     event.preventDefault();
 
-    const taskCreation: TaskType = {id: uuidv4(), content: newTaskContent, isCompleted: isTheTaskCompleted};
+    const taskCreation: TaskType = {id: uuidv4(), content: newTaskContent, isCompleted: false};
 
-    setNewTask((state) => [...state, taskCreation]);
+    setTasks((state) => [...state, taskCreation]);
     setNewTaskContent('');
-    console.log(tasks)
   }
 
   function handleNewTaskContentInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity('Este campo é obrigatório!')
   }
 
-  function isChecked() {
-    setIsTheTaskCompleted(!isTheTaskCompleted)
+  function completeTask(id: string) {
+    const taskIndex = tasks.findIndex((task) => task.id === id);
+    if (taskIndex === -1) return;
+    const task = tasks[taskIndex]
+    setTasks ((prevValue) =>{
+      return [
+        ...prevValue.slice(0, taskIndex),
+        {...task, isCompleted:!task.isCompleted},
+        ...prevValue.slice(taskIndex +1)
+      ]
+    })
   }
+
+  function deleteTask(id: string) {
+    const taskIndex = tasks.findIndex((task) => task.id === id);
+    if (taskIndex === -1) return;
+    setTasks((prevValue) =>{
+      return [
+        ...prevValue.slice(0, taskIndex),
+        ...prevValue.slice(taskIndex +1)
+      ]
+    })
+  }
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      console.log("Tecla pressionada:", e.key); // Depuração para ver se o evento está sendo capturado
+
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+          
+        const form = textarea.closest("form") as HTMLFormElement | null;
+        if (form) {
+          console.log("Enviando formulário...");
+          form.requestSubmit(); // Usa requestSubmit para evitar problemas com validações
+        }
+      }
+    };
+
+    textarea.addEventListener("keydown", handleKeyDown);
+    return () => textarea.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   return (
     <>
       <Header />
       <main>
         <form onSubmit={handleCreateNewTask} className={styles.inputAddNewComment}>
           <textarea
+          ref={textareaRef}
           name="comment"
           placeholder="Adicione uma nova tarefa"
           value={newTaskContent}
@@ -82,13 +126,14 @@ export default function App () {
                 </li>
               </ul>
             </header>
-          <ul>
+          <ul className={styles.taskList}>
             {
               tasks.map(task => {
                 return (
                   <TaskCard
                   task={task}
-                  onIsChecked={isChecked}
+                  onComplete={completeTask}
+                  onDelete={deleteTask}
                   />
                 )
               })
