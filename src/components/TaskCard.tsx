@@ -16,7 +16,7 @@ interface TaskCardProps {
 export function TaskCard({task, onComplete, onDelete}: TaskCardProps) {
 
   return (
-    <li className={cx(styles.taskCard, (task.isCompleted ? 'completed': ''))} id={task.id}>
+    <li className={cx(styles.taskCard, (task.isCompleted && styles.completed))} id={task.id}>
       <fieldset>
         <label>
           <input
@@ -26,7 +26,7 @@ export function TaskCard({task, onComplete, onDelete}: TaskCardProps) {
           />
           <span
             onClick={() => onComplete(task.id)}
-            className={cx(task.isCompleted ? 'checked': '')}
+            className={cx(task.isCompleted && styles.checked)}
           >
           </span>
         </label>

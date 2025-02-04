@@ -6,6 +6,7 @@ import styles from './css/app.module.css';
 
 import { Header } from './components/Header';
 import { TaskCard } from './components/TaskCard';
+import { NoTasks } from './components/NoTasks';
 
 export interface TaskType {
   id: string
@@ -137,19 +138,20 @@ export default function App () {
                 </li>
               </ul>
             </header>
-          <ul className={styles.taskList}>
-            {
-              tasks.map(task => {
-                return (
-                  <TaskCard
-                  task={task}
-                  onComplete={completeTask}
-                  onDelete={deleteTask}
-                  />
-                )
-              })
-            }
-          </ul>
+            { !tasksCreated && <NoTasks /> }
+            <ul className={styles.taskList}>
+              {
+                tasks.map(task => {
+                  return (
+                    <TaskCard
+                    task={task}
+                    onComplete={completeTask}
+                    onDelete={deleteTask}
+                    />
+                  )
+                })
+              }
+            </ul>
           </section>
         </div>
       </main>
