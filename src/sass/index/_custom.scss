@@ -14,16 +14,24 @@
   background-color: var(--gray-500);
   display: flex;
   gap: 8px;
+  
   textarea {
     width: 638px;
-    height: 54px;
-    padding: 13px 0 15px 15px;
-    resize: none;
+    height: 54px; /* altura fixa */
+    margin-left: 15px;
+    padding: 13px 0 15px 0;
+    resize: none; /* impede o redimensionamento */
     font-size: 1rem;
     color: var(--gray-100);
-    overflow-y: hidden;
-    &::placeholder {font-size: 1rem;}
+    overflow-x: hidden; /* barra de rolagem horizontal invisível */
+    overflow-y: hidden; /* esconde a barra de rolagem vertical */
+    white-space: nowrap; /* impede a quebra de linha */
+    
+    &::placeholder {
+      font-size: 1rem;
+    }
   }
+
   button {
     padding: 0 16px;
     height: 3.25rem;
@@ -31,6 +39,7 @@
     display: flex;
     align-items: center;
     gap: 7px;
+
     > span {
       color: var(--gray-100);
       font-size: .875rem;

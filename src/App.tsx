@@ -66,11 +66,11 @@ export default function App () {
   useEffect(() => {
     const textarea = textareaRef.current;
     if (!textarea) return;
-
+  
     const handleKeyDown = (e: KeyboardEvent) => {
       console.log("Tecla pressionada:", e.key); // Depuração para ver se o evento está sendo capturado
-
-      if (e.key === "Enter" && !e.shiftKey) {
+  
+      if (e.key === "Enter") {
         e.preventDefault();
           
         const form = textarea.closest("form") as HTMLFormElement | null;
@@ -80,10 +80,11 @@ export default function App () {
         }
       }
     };
-
+  
     textarea.addEventListener("keydown", handleKeyDown);
     return () => textarea.removeEventListener("keydown", handleKeyDown);
   }, []);
+  
 
   return (
     <>

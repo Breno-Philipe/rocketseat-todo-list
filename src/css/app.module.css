@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   margin: 0;
   padding: 0;
@@ -107,12 +108,15 @@ body {
 }
 .inputAddNewComment textarea {
   width: 638px;
-  height: 54px;
-  padding: 13px 0 15px 15px;
-  resize: none;
+  height: 54px; /* altura fixa */
+  margin-left: 15px;
+  padding: 13px 0 15px 0;
+  resize: none; /* impede o redimensionamento */
   font-size: 1rem;
   color: var(--gray-100);
-  overflow-y: hidden;
+  overflow-x: hidden; /* barra de rolagem horizontal invisível */
+  overflow-y: hidden; /* esconde a barra de rolagem vertical */
+  white-space: nowrap; /* impede a quebra de linha */
 }
 .inputAddNewComment textarea::placeholder {
   font-size: 1rem;
