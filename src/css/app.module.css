@@ -1,4 +1,3 @@
-@charset "UTF-8";
 * {
   margin: 0;
   padding: 0;
@@ -14,6 +13,7 @@ body {
   line-height: 1.5;
   color: #333;
   background-color: #fff;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -79,12 +79,29 @@ body {
   color: var(--gray-100);
   -webkit-font-smoothing: antialiased;
   font-family: "Inter", serif;
+  min-height: 100vh;
+}
+body::-webkit-scrollbar {
+  width: 12px;
+}
+body::-webkit-scrollbar-track {
+  background: var(--gray-700);
+}
+body::-webkit-scrollbar-thumb {
+  background-color: var(--purple);
+  border-radius: 20px;
+  border: 3px solid var(--gray-700);
 }
 
 .container {
   max-width: 47.875rem;
   padding: 0 0.938rem;
   margin: 0 auto;
+}
+
+.monoSpacedNumbers {
+  display: inline;
+  font-family: "Fira Code", serif;
 }
 
 .header {
@@ -107,32 +124,41 @@ body {
   gap: 8px;
 }
 .inputAddNewComment textarea {
-  width: 638px;
-  height: 54px; /* altura fixa */
+  width: 39.875rem;
+  height: 54px;
   margin-left: 15px;
   padding: 13px 0 15px 0;
-  resize: none; /* impede o redimensionamento */
+  resize: none;
   font-size: 1rem;
   color: var(--gray-100);
-  overflow-x: hidden; /* barra de rolagem horizontal invisível */
-  overflow-y: hidden; /* esconde a barra de rolagem vertical */
-  white-space: nowrap; /* impede a quebra de linha */
+  overflow-x: hidden;
+  overflow-y: hidden;
+  white-space: nowrap;
 }
 .inputAddNewComment textarea::placeholder {
   font-size: 1rem;
 }
 .inputAddNewComment button {
   padding: 0 16px;
-  height: 3.25rem;
+  height: 54px;
   background-color: var(--blue-dark);
   display: flex;
   align-items: center;
   gap: 7px;
+  transition: all 0.2s linear;
 }
 .inputAddNewComment button > span {
   color: var(--gray-100);
   font-size: 0.875rem;
   font-weight: bold;
+}
+.inputAddNewComment button:hover {
+  background-color: var(--blue);
+}
+@media (max-width: 480px) {
+  .inputAddNewComment > textarea {
+    width: 200px;
+  }
 }
 
 .listHeader {
@@ -163,6 +189,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-bottom: 70px;
 }
 
 .taskCard {
@@ -187,11 +214,17 @@ body {
 }
 .taskCard fieldset > label > span {
   display: block;
+  cursor: pointer;
   width: 1.0625rem;
   height: 1.0625rem;
   border: 2px solid var(--blue);
   border-radius: 50%;
   margin: 3px;
+  transition: all 0.2s linear;
+}
+.taskCard fieldset > label > span:hover {
+  border-color: var(--blue-dark);
+  background-color: rgba(30, 111, 159, 0.2);
 }
 .taskCard fieldset > label > span.checked {
   background-color: red;
@@ -201,20 +234,29 @@ body {
   line-height: 140%;
 }
 .taskCard > button {
-  width: 24px;
-  height: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 6px 5px 5px 6px;
+}
+.taskCard > button > svg {
+  width: 100%;
+  height: 100%;
+}
+.taskCard > button > svg > path {
+  transition: all 0.2s linear;
+}
+.taskCard > button:hover > svg > path {
+  fill: var(--danger);
 }
 .taskCard.completed {
   background-color: blue;
 }
 
-.completed {
+.taskCard.completed {
   background-color: blue;
 }
 
-.checked {
+.taskCard.checked {
   background-color: red;
 }

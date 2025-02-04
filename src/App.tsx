@@ -21,6 +21,16 @@ export default function App () {
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  const tasksCreated = tasks.length;
+
+  const tasksCompleteds = tasks.reduce((prevValue, currentTask) => {
+    if (currentTask.isCompleted) {
+      return prevValue + 1
+    }
+
+    return prevValue
+  }, 0)
+
   function handleNewTaskChange(event: ChangeEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity('')
     setNewTaskContent(event.target.value);
@@ -120,10 +130,10 @@ export default function App () {
             <header className={styles.listHeader}>
               <ul>
                 <li>
-                  <h2>Tarefas Criadas: <span>{tasks.length}</span></h2>
+                  <h2>Tarefas Criadas: <span><div className={styles.monoSpacedNumbers}>{tasksCreated}</div></span></h2>
                 </li>
                 <li>
-                  <h2>Concluídas: <span>{tasks.length}</span></h2>
+                  <h2>Concluídas: <span><div className={styles.monoSpacedNumbers}>{tasksCompleteds}</div> de <div className={styles.monoSpacedNumbers}>{tasksCreated}</div></span></h2>
                 </li>
               </ul>
             </header>

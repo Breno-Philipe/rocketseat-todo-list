@@ -16,16 +16,16 @@
   gap: 8px;
   
   textarea {
-    width: 638px;
-    height: 54px; /* altura fixa */
+    width: 39.875rem;
+    height: 54px;
     margin-left: 15px;
     padding: 13px 0 15px 0;
-    resize: none; /* impede o redimensionamento */
+    resize: none;
     font-size: 1rem;
     color: var(--gray-100);
-    overflow-x: hidden; /* barra de rolagem horizontal invisível */
-    overflow-y: hidden; /* esconde a barra de rolagem vertical */
-    white-space: nowrap; /* impede a quebra de linha */
+    overflow-x: hidden;
+    overflow-y: hidden;
+    white-space: nowrap;
     
     &::placeholder {
       font-size: 1rem;
@@ -34,17 +34,23 @@
 
   button {
     padding: 0 16px;
-    height: 3.25rem;
+    height: 54px;
     background-color: var(--blue-dark);
     display: flex;
     align-items: center;
     gap: 7px;
-
+    
+    transition: all .2s linear;
     > span {
       color: var(--gray-100);
       font-size: .875rem;
       font-weight: bold;
     }
+    &:hover {background-color: var(--blue);}
+  }
+
+  @media(max-width: 480px) {
+   > textarea {width: 200px;}
   }
 }
 
@@ -73,6 +79,8 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  margin-bottom: 70px;
 }
 
 .taskCard {
@@ -95,12 +103,19 @@
       > input {display: none;}
       > span {
         display: block;
+        cursor: pointer;
 
         width: 1.0625rem;
         height: 1.0625rem;
         border: 2px solid var(--blue);
         border-radius: 50%;
         margin: 3px;
+
+        transition: all .2s linear;
+        &:hover {
+          border-color: var(--blue-dark);
+          background-color: rgba(#1E6F9F, .2);
+        }
         &.checked {background-color: red;}
       }
     }
@@ -110,13 +125,22 @@
     }
   }
   > button {
-    width: 24px;
-    height: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    padding: 6px 5px 5px 6px;
+
+    > svg {
+      width: 100%;
+      height: 100%;
+      > path {transition: all .2s linear;}
+    }
+    &:hover {
+      > svg {> path { fill: var(--danger); }}
+    }
   }
   &.completed {background-color: blue;}
 }
-.completed {background-color: blue;}
-.checked {background-color: red;}
+.taskCard.completed {background-color: blue;}
+.taskCard.checked {background-color: red;}
