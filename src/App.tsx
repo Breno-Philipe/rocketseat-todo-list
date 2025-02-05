@@ -79,7 +79,7 @@ export default function App () {
     if (!textarea) return;
   
     const handleKeyDown = (e: KeyboardEvent) => {
-      console.log("Tecla pressionada:", e.key); // Depuração para ver se o evento está sendo capturado
+      console.log("Tecla pressionada:", e.key);
   
       if (e.key === "Enter") {
         e.preventDefault();
@@ -141,7 +141,7 @@ export default function App () {
             { !tasksCreated && <NoTasks /> }
             <ul className={styles.taskList}>
               {
-                tasks.map(task => {
+                tasks.slice().reverse().sort((a, b) => Number(a.isCompleted) - Number(b.isCompleted)).map(task => {
                   return (
                     <TaskCard
                     task={task}
